@@ -9,7 +9,7 @@ import (
 	"github.com/fishy/httpsproxy"
 )
 
-func main() {
+func Example() {
 	blynkHost := "blynk-cloud.com"
 	blynkCert := `-----BEGIN CERTIFICATE-----
 MIID5TCCAs2gAwIBAgIJAIHSnb+cv4ECMA0GCSqGSIb3DQEBCwUAMIGIMQswCQYD
