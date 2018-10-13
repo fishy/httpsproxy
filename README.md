@@ -10,8 +10,10 @@ with self-signed https certificate.
 ## Why?
 
 The main user of this library is
-[blynk-proxy](https://github.com/fishy/blynk-proxy),
-please refer to its README for more information.
+[`blynk-proxy`](https://github.com/fishy/blynk-proxy),
+please refer to its
+[README](https://github.com/fishy/blynk-proxy/blob/master/README.md)
+for more information.
 
 This library is moved out of `blynk-proxy` project because I believe others
 facing similar situation could benefit from it.
