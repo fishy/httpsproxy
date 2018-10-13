@@ -1,3 +1,6 @@
+[![GoDoc](https://godoc.org/github.com/fishy/httpsproxy?status.svg)](https://godoc.org/github.com/fishy/httpsproxy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/fishy/httpsproxy)](https://goreportcard.com/report/github.com/fishy/httpsproxy)
+
 # httpsproxy
 
 `httpsproxy` is a [Go](https://golang.org)
