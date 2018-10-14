@@ -8,8 +8,8 @@ import (
 )
 
 func TestRewriteURL(t *testing.T) {
-	targetHost := "blynk-cloud.com"
-	selfURL, err := url.Parse("https://blynk-proxy.appspot.com")
+	targetHost := "self-signed.badssl.com"
+	selfURL, err := url.Parse("https://my-proxy.com")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -17,7 +17,7 @@ func TestRewriteURL(t *testing.T) {
 	t.Run(
 		"wrong host",
 		func(t *testing.T) {
-			orig := "https://blynk.cc"
+			orig := "https://expired.badssl.com"
 			expect := orig
 			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
 			if actual != expect {
@@ -27,10 +27,10 @@ func TestRewriteURL(t *testing.T) {
 	)
 
 	t.Run(
-		"http blynk-cloud",
+		"http",
 		func(t *testing.T) {
-			orig := "http://blynk-cloud.com"
-			expect := "https://blynk-proxy.appspot.com"
+			orig := "http://self-signed.badssl.com"
+			expect := "https://my-proxy.com"
 			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
@@ -39,10 +39,10 @@ func TestRewriteURL(t *testing.T) {
 	)
 
 	t.Run(
-		"https blynk-cloud",
+		"https",
 		func(t *testing.T) {
-			orig := "https://blynk-cloud.com/foo/bar?foo=bar&baz=qux#asdf"
-			expect := "https://blynk-proxy.appspot.com/foo/bar?foo=bar&baz=qux#asdf"
+			orig := "https://self-signed.badssl.com/foo/bar?foo=bar&baz=qux#asdf"
+			expect := "https://my-proxy.com/foo/bar?foo=bar&baz=qux#asdf"
 			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
@@ -65,7 +65,7 @@ func TestRewriteURL(t *testing.T) {
 	t.Run(
 		"no selfURL",
 		func(t *testing.T) {
-			orig := "https://blynk-cloud.com/foo/bar?foo=bar&baz=qux#asdf"
+			orig := "https://self-signed.badssl.com/foo/bar?foo=bar&baz=qux#asdf"
 			expect := orig
 			actual := httpsproxy.RewriteURL(orig, targetHost, nil)
 			if actual != expect {
