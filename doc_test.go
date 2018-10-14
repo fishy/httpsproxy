@@ -16,6 +16,8 @@ func Example() {
 		log.Fatal(err)
 	}
 
+	// Get it by the following command:
+	// openssl s_client -showcerts -connect self-signed.badssl.com:443 </dev/null
 	cert := `-----BEGIN CERTIFICATE-----
 MIIE8DCCAtigAwIBAgIJAM28Wkrsl2exMA0GCSqGSIb3DQEBCwUAMH8xCzAJBgNV
 BAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRYwFAYDVQQHDA1TYW4gRnJhbmNp
