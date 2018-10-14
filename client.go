@@ -10,9 +10,11 @@ import (
 // DefaultHTTPClient returns an http client that can be used in Mux function
 // with:
 //
-// - certPool: the x509 cert pool to trust.
-// - timeout: the http timeout.
-// - checkRedirectFunc: the function to handle 3xx redirects, could be nil which
+// * certPool: the x509 cert pool to trust.
+//
+// * timeout: the http timeout.
+//
+// * checkRedirectFunc: the function to handle 3xx redirects, could be nil which
 //                      means default behavior.
 func DefaultHTTPClient(
 	certPool *x509.CertPool,
