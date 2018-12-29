@@ -91,7 +91,11 @@ func ProxyRootHandler(
 			}
 		}
 		w.WriteHeader(resp.StatusCode)
-		w.Write(body)
+		if _, err := w.Write(body); err != nil {
+			if logger != nil {
+				logger.Print(err)
+			}
+		}
 	}
 }
 
@@ -105,7 +109,11 @@ func CheckError(logger *log.Logger, w http.ResponseWriter, err error) bool {
 		logger.Print(err)
 	}
 	w.WriteHeader(http.StatusBadGateway)
-	w.Write([]byte(err.Error()))
+	if _, err := w.Write([]byte(err.Error())); err != nil {
+		if logger != nil {
+			logger.Print(err)
+		}
+	}
 	return true
 }
 
