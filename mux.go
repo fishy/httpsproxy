@@ -17,6 +17,25 @@ var client *http.Client
 
 // Mux creates an http serve mux to do the proxy job.
 //
+// The returned mux contains a single handler for "/" to the handler generated
+// by ProxyRootHandler to do the proxy.
+// You can add your own handlers to handle cases like health check.
+//
+// Refer to the doc of ProxyRootHandler for the more detailed explanations of
+// the args.
+func Mux(
+	client *http.Client,
+	targetURL, selfURL *url.URL,
+	logger *log.Logger,
+) *http.ServeMux {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", ProxyRootHandler(client, targetURL, selfURL, logger))
+	return mux
+}
+
+// ProxyRootHandler generates the http handler function to be used to serve root
+// ("/") in http mux.
+//
 // client is the http client to use. You can either use DefaultHTTPClient
 // function to get a default implementation, or refer to its code to create your
 // own. You migh also find github.com/fishy/badcerts library useful when
@@ -30,60 +49,50 @@ var client *http.Client
 //
 // logger is the logger to log errors. It could be nil, which means no errors
 // will be logged.
-//
-// The returned mux contains a single handler for "/" to do the proxy.
-// You can add your own handlers to handle cases like health check.
-func Mux(
+func ProxyRootHandler(
 	client *http.Client,
-	targetURL *url.URL,
-	selfURL *url.URL,
+	targetURL, selfURL *url.URL,
 	logger *log.Logger,
-) *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.HandleFunc(
-		"/",
-		func(w http.ResponseWriter, r *http.Request) {
-			newURL := &url.URL{
-				Scheme: targetURL.Scheme,
-				Host:   targetURL.Host,
-				// In incoming r.URL only these 2 fields are set:
-				Path:     r.URL.Path,
-				RawQuery: r.URL.RawQuery,
-			}
-			req, err := http.NewRequest(r.Method, newURL.String(), r.Body)
-			if CheckError(logger, w, err) {
-				return
-			}
-			req.Header.Set("X-Forwarded-For", r.RemoteAddr)
-			CopyRequestHeaders(r, req, requestHeadersToCopy)
+) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		newURL := &url.URL{
+			Scheme: targetURL.Scheme,
+			Host:   targetURL.Host,
+			// In incoming r.URL only these 2 fields are set:
+			Path:     r.URL.Path,
+			RawQuery: r.URL.RawQuery,
+		}
+		req, err := http.NewRequest(r.Method, newURL.String(), r.Body)
+		if CheckError(logger, w, err) {
+			return
+		}
+		req.Header.Set("X-Forwarded-For", r.RemoteAddr)
+		CopyRequestHeaders(r, req, requestHeadersToCopy)
 
-			resp, err := client.Do(req)
-			if CheckError(logger, w, err) {
-				return
-			}
+		resp, err := client.Do(req)
+		if CheckError(logger, w, err) {
+			return
+		}
 
-			defer resp.Body.Close()
-			body, err := ioutil.ReadAll(resp.Body)
-			if CheckError(logger, w, err) {
-				return
-			}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if CheckError(logger, w, err) {
+			return
+		}
 
-			header := w.Header()
-			for key, values := range resp.Header {
-				canonicalKey := textproto.CanonicalMIMEHeaderKey(key)
-				for _, value := range values {
-					if canonicalKey == "Location" {
-						value = RewriteURL(logger, value, targetURL.Host, selfURL)
-					}
-					header.Add(canonicalKey, value)
+		header := w.Header()
+		for key, values := range resp.Header {
+			canonicalKey := textproto.CanonicalMIMEHeaderKey(key)
+			for _, value := range values {
+				if canonicalKey == "Location" {
+					value = RewriteURL(logger, value, targetURL.Host, selfURL)
 				}
+				header.Add(canonicalKey, value)
 			}
-			w.WriteHeader(resp.StatusCode)
-			w.Write(body)
-		},
-	)
-
-	return mux
+		}
+		w.WriteHeader(resp.StatusCode)
+		w.Write(body)
+	}
 }
 
 // CheckError checks error. If error is non-nil, it writes HTTP status code 502
