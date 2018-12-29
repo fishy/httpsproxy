@@ -96,6 +96,9 @@ func ProxyRootHandler(
 				logger.Print(err)
 			}
 		}
+		if flusher, ok := w.(http.Flusher); ok {
+			flusher.Flush()
+		}
 	}
 }
 
@@ -113,6 +116,9 @@ func CheckError(logger *log.Logger, w http.ResponseWriter, err error) bool {
 		if logger != nil {
 			logger.Print(err)
 		}
+	}
+	if flusher, ok := w.(http.Flusher); ok {
+		flusher.Flush()
 	}
 	return true
 }
