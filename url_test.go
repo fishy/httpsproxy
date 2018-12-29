@@ -19,7 +19,7 @@ func TestRewriteURL(t *testing.T) {
 		func(t *testing.T) {
 			orig := "https://expired.badssl.com"
 			expect := orig
-			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
+			actual := httpsproxy.RewriteURL(nil, orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
 			}
@@ -31,7 +31,7 @@ func TestRewriteURL(t *testing.T) {
 		func(t *testing.T) {
 			orig := "http://self-signed.badssl.com"
 			expect := "https://my-proxy.com"
-			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
+			actual := httpsproxy.RewriteURL(nil, orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
 			}
@@ -43,7 +43,7 @@ func TestRewriteURL(t *testing.T) {
 		func(t *testing.T) {
 			orig := "https://self-signed.badssl.com/foo/bar?foo=bar&baz=qux#asdf"
 			expect := "https://my-proxy.com/foo/bar?foo=bar&baz=qux#asdf"
-			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
+			actual := httpsproxy.RewriteURL(nil, orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
 			}
@@ -55,7 +55,7 @@ func TestRewriteURL(t *testing.T) {
 		func(t *testing.T) {
 			orig := "al1i7y4hnelf  1lanlsu"
 			expect := orig
-			actual := httpsproxy.RewriteURL(orig, targetHost, selfURL)
+			actual := httpsproxy.RewriteURL(nil, orig, targetHost, selfURL)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
 			}
@@ -67,7 +67,7 @@ func TestRewriteURL(t *testing.T) {
 		func(t *testing.T) {
 			orig := "https://self-signed.badssl.com/foo/bar?foo=bar&baz=qux#asdf"
 			expect := orig
-			actual := httpsproxy.RewriteURL(orig, targetHost, nil)
+			actual := httpsproxy.RewriteURL(nil, orig, targetHost, nil)
 			if actual != expect {
 				t.Errorf("RewriteURL(%q) expected %q, got %q", orig, expect, actual)
 			}

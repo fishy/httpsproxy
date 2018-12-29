@@ -73,7 +73,7 @@ func Mux(
 				canonicalKey := textproto.CanonicalMIMEHeaderKey(key)
 				for _, value := range values {
 					if canonicalKey == "Location" {
-						value = RewriteURL(value, targetURL.Host, selfURL)
+						value = RewriteURL(logger, value, targetURL.Host, selfURL)
 					}
 					header.Add(canonicalKey, value)
 				}
@@ -111,14 +111,20 @@ func CopyRequestHeaders(from, to *http.Request, headers []string) {
 }
 
 // RewriteURL rewrites all targetHost URLs to us (selfURL).
-func RewriteURL(origURL, targetHost string, selfURL *url.URL) string {
+func RewriteURL(
+	logger *log.Logger,
+	origURL, targetHost string,
+	selfURL *url.URL,
+) string {
 	if selfURL == nil {
 		return origURL
 	}
 
 	u, err := url.Parse(origURL)
 	if err != nil {
-		log.Print(err)
+		if logger != nil {
+			logger.Print(err)
+		}
 		return origURL
 	}
 	if u.Host == targetHost {
