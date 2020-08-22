@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/fishy/httpsproxy?status.svg)](https://godoc.org/github.com/fishy/httpsproxy)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/fishy/httpsproxy)](https://pkg.go.dev/github.com/fishy/httpsproxy)
 [![Go Report Card](https://goreportcard.com/badge/github.com/fishy/httpsproxy)](https://goreportcard.com/report/github.com/fishy/httpsproxy)
 
 # httpsproxy
@@ -21,7 +21,7 @@ facing similar situation could benefit from it.
 ## Example
 
 Please refer to
-[godoc example](https://godoc.org/github.com/fishy/httpsproxy#example-package)
+[pkg.go.dev example](https://pkg.go.dev/github.com/fishy/httpsproxy?tab=doc#example-package)
 or
 [blynk-proxy code](https://github.com/fishy/blynk-proxy/blob/master/main.go).
 
