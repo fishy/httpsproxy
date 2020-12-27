@@ -3,4 +3,4 @@
 //
 // The main user of this library is blynk-proxy, please refer to that project
 // for context and examples: https://github.com/fishy/blynk-proxy
-package httpsproxy
+package httpsproxy // import "go.yhsif.com/httpsproxy"

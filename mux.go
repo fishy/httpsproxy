@@ -38,8 +38,8 @@ func Mux(
 //
 // client is the http client to use. You can either use DefaultHTTPClient
 // function to get a default implementation, or refer to its code to create your
-// own. You migh also find github.com/fishy/badcerts library useful when
-// creating your own client.
+// own. You migh also find go.yhsif.com/badcerts package useful when creating
+// your own client.
 //
 // targetURL is the target URL this mux proxies to. Only its scheme and host
 // will be used.

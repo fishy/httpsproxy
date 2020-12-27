@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/fishy/httpsproxy"
+	"go.yhsif.com/httpsproxy"
 )
 
 var validCert = `-----BEGIN CERTIFICATE-----

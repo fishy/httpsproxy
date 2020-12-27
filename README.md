@@ -1,5 +1,5 @@
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/fishy/httpsproxy)](https://pkg.go.dev/github.com/fishy/httpsproxy)
-[![Go Report Card](https://goreportcard.com/badge/github.com/fishy/httpsproxy)](https://goreportcard.com/report/github.com/fishy/httpsproxy)
+[![PkgGoDev](https://pkg.go.dev/badge/go.yhsif.com/httpsproxy)](https://pkg.go.dev/go.yhsif.com/httpsproxy)
+[![Go Report Card](https://goreportcard.com/badge/go.yhsif.com/httpsproxy)](https://goreportcard.com/report/go.yhsif.com/httpsproxy)
 
 # httpsproxy
 
@@ -21,10 +21,10 @@ facing similar situation could benefit from it.
 ## Example
 
 Please refer to
-[pkg.go.dev example](https://pkg.go.dev/github.com/fishy/httpsproxy?tab=doc#example-package)
+[pkg.go.dev example](https://pkg.go.dev/go.yhsif.com/httpsproxy?tab=doc#example-package)
 or
 [blynk-proxy code](https://github.com/fishy/blynk-proxy/blob/master/main.go).
 
 ## License
 
-BSD 3-Clause, refer to LICENSE file for more details.
+[BSD 3-Clause](LICENSE).

@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/fishy/httpsproxy"
+	"go.yhsif.com/httpsproxy"
 )
 
 func Example() {

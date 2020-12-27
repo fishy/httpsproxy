@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/fishy/httpsproxy"
+	"go.yhsif.com/httpsproxy"
 )
 
 func TestRewriteURL(t *testing.T) {
